@@ -1,7 +1,7 @@
 const HttpError = require('../models/http-error');
 const { validationResult } = require('express-validator')
-const { v4: uuidv4 } = require('uuid');
 const Customer = require('../models/customer');
+const User = require('../models/user');
 
 
 //Create customer model
@@ -16,7 +16,7 @@ const createCustomer = async (req, res, next) => {
                 );
             }
 
-    const { name, mobile, email, address, city, gps, image, creator} = req.body;
+    const { name, mobile, email, address, city, gps, image} = req.body;
 
     const createdCustomer = new Customer({
         name,
@@ -29,13 +29,42 @@ const createCustomer = async (req, res, next) => {
         creator : "Kofi"
     })
 
-    try {
-        await createdCustomer.save() ;
-    }catch (err){
-        const error = new HttpError('Creating Customer Failed', 500);
-        return next(error)
-    }
-    res.status(201).json({msg: "User Created successfully"})
+let user
+// try{
+//   user = await User.findById(creator);
+// }catch(err){        
+//   const error = new HttpError('Creating Customer Failed', 500);
+//   return next(error)
+// }
+
+// if(!user){
+//   const error = new HttpError('We could not find the userr ID', 404)
+//   return next(error);
+// }else{
+//   console.log(user)
+// }
+
+
+try {
+   // const sess = await mongoose.startSession();
+    
+    //sess.startTransaction()
+
+    // await createdCustomer.save({session: sess}) ;
+    await createdCustomer.save() ;
+
+   // user.customer.push(createdCustomer)
+
+    //await user.save({session : sess})
+
+    //await sess.commitTransaction ();
+
+
+}catch (err){
+    const error = new HttpError('Creating Customer Failed', 500);
+    return next(error)
+}
+res.status(201).json({msg: "Customer added successfully"})
 };
 
 
@@ -43,7 +72,7 @@ const createCustomer = async (req, res, next) => {
 const getAllCustomers  = async (req, res, next) => {
     let customer;
         try {
-          customer = await Customer.find();
+          customer = await Customer.find().sort({"name":1} );
         } catch (err) {
           const error = new HttpError(
             'Something went wrong, could not find the customer.',
@@ -51,7 +80,6 @@ const getAllCustomers  = async (req, res, next) => {
           );
           return next(error);
         }
-        console.log(customer)
       
         if (!customer) {
           const error = new HttpError(
@@ -161,7 +189,7 @@ const deleteCustomer = async (req, res, next) => {
 
         let customer;
         try {
-            customer = await Customer.findById(customerId);
+            customer = await Customer.findById(id);
         } catch (err) {
           const error = new HttpError(
             'Something went wrong, could not update the Customer details.',

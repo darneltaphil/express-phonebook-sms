@@ -1,57 +1,109 @@
 const HttpError = require('../models/http-error');
 const { validationResult } = require('express-validator');
-//const uuid = require ("uuid/v5")
 
-const DUMMY_USERS = [
-    {
-        id: "1",
-        name: "Kof-Ano Akpadji",
-        mobile: "0550563878",
-        email: "daneltaphil@gmail.com",
-        gps: "GD-143-9857",
-        image:"https://via.placeholder.com/25",
-        username: "admin",
-        pwd : "1234"
+const User = require("../models/user");
+const Customer = require('../models/customer');
 
-    },
-    {
-        id: "2",
-        name: "Kafui Mensah Gifty",
-        mobile: "0541265854",
-        email: "daneltaphil@gmail.com",
-        address: "Dodowa Road",
-        gps: "GD-143-9857",
-        image:"https://via.placeholder.com/25",
-        username: "admin2",
-        pwd : "1234"
+const getUser = async (req, res, next) => {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //         const error = new HttpError('Invalid inputs passed, please check your data.', 422)
+    //         return next(error);
+    //     }
+
+    // const {  email, password } = req.body;
+    
+    let users
+    try {
+        users = await User.find({},'-pwd')
+    }catch(err){
+        const error = new HttpError("Fetching users failed", 500);
+        return next(error)
     }
-]
 
-const getUser = (req, res, next) => {
-
-};
-
-
-
-const createUser = (req, res, next) => {
-    // const { name, mobile, email, address, city, gps, username ,pwd} = req.body;
-
-    // const createdUser = {
-    //     name,
-    //     mobile,
-    //     email,
-    //     address,
-    //     username, 
-    //     pwd,
-    //     gps,
-    //     username,
-    //     password
+    // if(!existingUser || existingUser.password !== password ){
+    //     const error = new HttpError('Email and Password do not match', 401);
+    //     return next(error)
     // }
-    // DUMMY_USERS.push(createdUser);
 
-    // res.status(201).json({msg: createdUser})
+    res.status(201).json({users: users.map(user => user.toObject({getters: true}))})
 };
 
 
-exports.getUser = getUser;
-exports.createUser = createUser; 
+const login = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+            const error = new HttpError('Invalid inputs passed, please check your data.', 422)
+            return next(error);
+        }
+
+    const {  email, password } = req.body;
+    
+    let existingUser
+    try {
+            existingUser = await User.findOne({email: email})
+    }catch(err){
+        const error = new HttpError("Login failed, please try again later", 500);
+        return next(error)
+    }
+
+    if(!existingUser || existingUser.password !== password ){
+        const error = new HttpError('Email and Password do not match', 401);
+        return next(error)
+    }
+
+    res.status(201).json({msg: "User Logged in successfully"})
+};
+
+
+const signUp = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+            return next(
+                    new HttpError('Invalid inputs passed, please check your data.', 422)
+                );
+            }
+    const { name, mobile, email, address, city, gps, image, pwd } = req.body;
+    
+    let existingUser
+    try {
+            existingUser = await User.findOne({email: email})
+    }catch(err){
+        const error = new HttpError("Signing Up failed, please try again later", 500);
+        return next(error)
+    }
+
+    if(existingUser){
+        const error = new HttpError('User exists already, please log in', 422);
+        return next(error)
+    }
+   
+        const createdUser = new User({
+            name,
+            mobile,
+            email,
+            address,
+            city,
+            gps,
+            image:"https://via.placeholder.com/25",
+            pwd,
+            customers: []
+        })
+
+
+        try {
+            await createdUser.save() ;
+        }catch (err){
+            const error = new HttpError('Signing up failed', 500);
+            return next(error)
+        }
+        res.status(201).json({msg: "User Created successfully"})
+    };
+
+
+
+
+
+    exports.getUser = getUser;
+    exports.login = login;
+    exports.signUp = signUp; 

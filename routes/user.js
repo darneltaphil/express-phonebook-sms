@@ -5,6 +5,8 @@ const usersController = require('../controllers/user');
 
 const router = express.Router();
 
+router.post('/login', usersController.login);
+
 router.get('/', usersController.getUser);
 
 router.post(
@@ -18,7 +20,7 @@ router.post(
       .isEmail(),
     check('password').isLength({ min: 6 })
   ],
-  usersController.createUser
+  usersController.signUp
 );
 
 

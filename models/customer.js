@@ -2,6 +2,7 @@ const  mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+        // creator:{type: mongoose.Types.ObjectId, required: false, ref: 'User'}
 
 const customerSchema = new Schema ({
     
@@ -12,7 +13,7 @@ const customerSchema = new Schema ({
         city: {type: String, required: false},
         gps: {type: String, required: false},
         image:{type: String, required: false},
-        creator:{type: String, required: false}
+        creator: {type: String, required: false}
     
 }); 
 module.exports = mongoose.model('Customer', customerSchema)

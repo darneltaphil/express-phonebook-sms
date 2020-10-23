@@ -9,17 +9,19 @@ require('dotenv').config();
 
 const customerRoutes = require('./routes/customer')
 const userRoutes = require('./routes/user')
+const smsRoutes = require('./routes/sms')
 const HttpError = require('./models/http-error');
 
 app.use(bodyParser.json()); 
-app.use(cors());
+app.use(cors()); 
 
 
         app.use('/api/customers', customerRoutes);
         app.use('/api/user', userRoutes);
+        app.use('/api/', smsRoutes);
  
         app.use(( req, res, next)=> { 
-            const error = new HttpError('Could not find Customer', 404);
+            const error = new HttpError('Invalid URL', 404);
             throw error
                        
         });
