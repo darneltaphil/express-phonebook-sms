@@ -1,11 +1,12 @@
 const express = require ('express');
 const app = express();
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require ('mongoose');
-const port = process.env.PORT || 5000
+const port = process.env.PORT 
 const cors = require ('cors');
 
-require('dotenv').config();
+
 
 const customerRoutes = require('./routes/customer')
 const userRoutes = require('./routes/user')

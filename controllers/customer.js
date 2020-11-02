@@ -30,35 +30,9 @@ const createCustomer = async (req, res, next) => {
     })
 
 let user
-// try{
-//   user = await User.findById(creator);
-// }catch(err){        
-//   const error = new HttpError('Creating Customer Failed', 500);
-//   return next(error)
-// }
-
-// if(!user){
-//   const error = new HttpError('We could not find the userr ID', 404)
-//   return next(error);
-// }else{
-//   console.log(user)
-// }
-
 
 try {
-   // const sess = await mongoose.startSession();
-    
-    //sess.startTransaction()
-
-    // await createdCustomer.save({session: sess}) ;
     await createdCustomer.save() ;
-
-   // user.customer.push(createdCustomer)
-
-    //await user.save({session : sess})
-
-    //await sess.commitTransaction ();
-
 
 }catch (err){
     const error = new HttpError('Creating Customer Failed', 500);

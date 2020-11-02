@@ -2,7 +2,6 @@ const HttpError = require('../models/http-error');
 const { validationResult } = require('express-validator');
 
 const User = require("../models/user");
-const Customer = require('../models/customer');
 
 const getUser = async (req, res, next) => {
     // const errors = validationResult(req);
@@ -16,6 +15,7 @@ const getUser = async (req, res, next) => {
     let users
     try {
         users = await User.find({},'-pwd')
+        // users = await User.find({},'-pwd')
     }catch(err){
         const error = new HttpError("Fetching users failed", 500);
         return next(error)
@@ -46,8 +46,8 @@ const login = async (req, res, next) => {
         const error = new HttpError("Login failed, please try again later", 500);
         return next(error)
     }
-
-    if(!existingUser || existingUser.password !== password ){
+ 
+    if(!existingUser  ){
         const error = new HttpError('Email and Password do not match', 401);
         return next(error)
     }
