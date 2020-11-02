@@ -13,7 +13,15 @@ const userSchema = new Schema ({
         gps: {type: String, required: true},
         image:{type: String, required: true},
         pwd:{type: String, required: true, minlength:6},
-        contacts:[{}]
+        contacts:[{
+                name: {type: String, required: true},
+                mobile: {type: Number, required: true},
+                email: {type: String, required: true, unique: true},
+                address: {type: String, required: true},
+                city: {type: String, required: true},
+                gps: {type: String, required: true},
+                image:{type: String, required: true}
+                 }]
 });
 
  userSchema.plugin(uniqueValidator);
