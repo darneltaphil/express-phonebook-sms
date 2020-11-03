@@ -8,4 +8,4 @@ const smsSchema = new Schema ({
 });
 
 
-module.exports = mongoose.model('Sms', smsSchema)
+module.exports = mongoose.model('Sms', smsSchema) 

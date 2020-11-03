@@ -19,15 +19,15 @@ const createCustomer = async (req, res, next) => {
     const { name, mobile, email, address, city, gps, image} = req.body;
 
     const createdCustomer = new Customer({
-        name,
-        mobile,
-        email,
-        address,
-        city,
-        gps,
-        image:"https://via.placeholder.com/25",
-        creator : "Kofi"
-    })
+                                            name,
+                                            mobile,
+                                            email,
+                                            address,
+                                            city,
+                                            gps,
+                                            image:"https://via.placeholder.com/25",
+                                            creator : "Kofi"
+                                        })
 
 let user
 
@@ -38,7 +38,7 @@ try {
     const error = new HttpError('Creating Customer Failed', 500);
     return next(error)
 }
-res.status(201).json({msg: "Customer added successfully"})
+res.status(201).json({msg: "Customer added successfully", status:true})
 };
 
 
@@ -63,7 +63,7 @@ const getAllCustomers  = async (req, res, next) => {
           return next(error);
         }
       
-        res.json({ customer }); 
+        res.json({ customer });  
 };
 
 

@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     }
  
     if(!existingUser  ){
-        const error = new HttpError('Email and Password do not match', 401);
+        const error = new HttpError('User Does not exist', 401);
         return next(error)
     }
 
@@ -79,16 +79,16 @@ const signUp = async (req, res, next) => {
     }
    
         const createdUser = new User({
-            name,
-            mobile,
-            email,
-            address,
-            city,
-            gps,
-            image:"https://via.placeholder.com/25",
-            pwd,
-            customers: []
-        })
+                                        name,
+                                        mobile,
+                                        email,
+                                        address,
+                                        city,
+                                        gps,
+                                        image:"https://via.placeholder.com/25",
+                                        pwd,
+                                        
+                                    })
 
 
         try {

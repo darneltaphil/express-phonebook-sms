@@ -15,7 +15,7 @@ const sendSms = async (req, res, next) => {
 
     const { number, message } = req.body;
     const endpoint = process.env.SMS_API+'to=233'+number+'&text='+message
-    console.log(endpoint)
+    //console.log(endpoint)
     await axios.post(endpoint)
     .then(response => {
         const r = response.data

@@ -13,15 +13,16 @@
     "express-validator": "^6.6.1",
     "mongoose": "^5.10.9",
     "mongoose-unique-validator": "^2.0.3",
-    "nodemon": "^2.0.4",
     "urlencode": "^1.1.0",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
-    "@types/uuid": "^8.3.0"
+    "@types/uuid": "^8.3.0",
+    "nodemon": "^2.0.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon app.js"
   },
   "author": "Kof-Ano Akpadji",
   "license": "MIT"
