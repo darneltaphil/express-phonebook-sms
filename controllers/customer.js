@@ -79,7 +79,6 @@ const getAllCustomers  = async (req, res, next) => {
           const error = new HttpError('You have no contacts',404);
           return next(error);
         }
-      console.log(userCustomers.customers)
         res.json({ customers: userCustomers.customers });  
 };
 
