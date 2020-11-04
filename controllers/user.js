@@ -97,25 +97,7 @@ const signUp = async (req, res, next) => {
             customers :[]
                       
                 })
-      console.log({
-            name,
-            mobile,
-            email,
-            address : "",
-            city : "",
-            gps: "",
-            password,
-            sender_id: "",
-            purchase_history: [{
-                    date :moment().format('LL'),
-                    amount: 0,
-                    description: '5 SMS Bonus'
-            }],
-            total_sms: 5,
-            account_active :0,
-            customers :[]
-                      
-                })
+
 
 
         try {

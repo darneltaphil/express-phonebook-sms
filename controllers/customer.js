@@ -12,9 +12,7 @@ const User = require('../models/user');
 const createCustomer = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-            return next(
-                    new HttpError('Invalid inputs passed, please check your data.', 422)
-                );
+            return next(new HttpError('Invalid inputs passed, please check your data.', 422));
             }
 
     const { name, mobile, email, address, city, gps, creator} = req.body;
@@ -27,7 +25,7 @@ const createCustomer = async (req, res, next) => {
                           city,
                           gps,
                           image:"https://via.placeholder.com/25",
-                          creator 
+                          creator :"5fa189e32516a81f48488d0f" 
                       })
 
 let user
@@ -61,6 +59,7 @@ try {
 }
 res.status(201).json({msg: "Customer added successfully", status:true})
 };
+
  
 
 //Get all customer documents from the collection
