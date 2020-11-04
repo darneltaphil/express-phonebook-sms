@@ -1,6 +1,6 @@
 const HttpError = require('../models/http-error');
 const { validationResult } = require('express-validator');
-
+const moment = require('moment')
 const Customer = require('../models/customer');
 const User = require("../models/user");
 
@@ -32,7 +32,7 @@ const getUser = async (req, res, next) => {
 const login = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-            const error = new HttpError('Invalid inputs passed, please check your data.', 422)
+            const error = new HttpError('Invalid Login details, please check your data.', 422)
             return next(error);
         }
  
@@ -57,13 +57,12 @@ const login = async (req, res, next) => {
 
 const signUp = async (req, res, next) => {
     const errors = validationResult(req);
-   // console.log(req)
-    if (!errors.isEmpty()) {
-            return next(
-                    new HttpError('Invalid inputs passed, please check your data.', 422)
-                );
-            }
-    const { name, mobile, email, address, city, gps, password } = req.body;
+    console.log(req.body)
+    // if (!errors.isEmpty()) {
+    //     const error =new HttpError('Invalid Sign up details passed, please check your data.', 422)
+    //         return next(error);
+    //         }
+    const { name, mobile, email, password } = req.body;
     
     let existingUser
     try {
@@ -79,16 +78,43 @@ const signUp = async (req, res, next) => {
     }
    
         const createdUser = new User({
-                    name,
-                    mobile,
-                    email,
-                    address,
-                    city,
-                    gps,
-                    image:"https://via.placeholder.com/25",
-                    password,
-                    customers :[]
-                    
+            name,
+            mobile,
+            email,
+            address : '',
+            city : '',
+            gps: '',
+            image: "",
+            password,
+            sender_id:'',
+            purchase_history: [{
+                    date :moment().format('LL'),
+                    amount: 0,
+                    description: '5 SMS Bonus'
+            }],
+            total_sms: 5,
+            account_active :0,
+            customers :[]
+                      
+                })
+      console.log({
+            name,
+            mobile,
+            email,
+            address : "",
+            city : "",
+            gps: "",
+            password,
+            sender_id: "",
+            purchase_history: [{
+                    date :moment().format('LL'),
+                    amount: 0,
+                    description: '5 SMS Bonus'
+            }],
+            total_sms: 5,
+            account_active :0,
+            customers :[]
+                      
                 })
 
 
