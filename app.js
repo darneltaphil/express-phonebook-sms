@@ -1,15 +1,22 @@
 const express = require ('express');
 const app = express();
-require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require ('mongoose');
 const cors = require ('cors');
+require('dotenv').config();
 const port = process.env.PORT 
 
 app.use(bodyParser.json()); 
 app.use(cors()); 
+
+//Allowing Cross Origin Resource Sharing
 app.use( (req,res,next)=>{
-    res.header('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+        'Access-Control-Allow-Headers', 
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        );
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
     next();
   })
 
@@ -18,14 +25,14 @@ const userRoutes = require('./routes/user')
 const smsRoutes = require('./routes/sms')
 const HttpError = require('./models/http-error');
 
-    app.use('/api/customers', customerRoutes);
-    app.use('/api/user', userRoutes);
-    app.use('/api/', smsRoutes);
- 
-    app.use(( req, res, next)=> { 
-        const error = new HttpError('Invalid URL', 404);
-        throw error
-    });
+app.use('/api/customers', customerRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/', smsRoutes);
+
+app.use(( req, res, next)=> { 
+    const error = new HttpError('Invalid URL', 404);
+    throw error
+});
 
 app.use((error, req, res, next)=>{ 
     if (res.headerSent) {

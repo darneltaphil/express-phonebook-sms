@@ -46,7 +46,7 @@ const login = async (req, res, next) => {
         return next(error)
     }
  
-    if(!existingUser  ){
+    if(!existingUser || existingUser.password !== password ){
         const error = new HttpError('User Does not exist', 401);
         return next(error)
     }
