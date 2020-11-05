@@ -93,6 +93,7 @@ const signUp = async (req, res, next) => {
                     description: '5 SMS Bonus'
             }],
             total_sms: 5,
+            sms_count: 0,
             account_active :0,
             customers :[]
                       

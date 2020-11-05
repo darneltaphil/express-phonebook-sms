@@ -21,6 +21,7 @@ const userSchema = new Schema ({
                 description : {type: String, default:"Free Starting SMS"},
         }],
         total_sms: {type:Number, required:false, default: 5},
+        sms_count: {type:Number, required:false, default: 0},
         account_active : {type: Number, default: 1},
         customers:[{type: mongoose.Types.ObjectId, required: true, ref :'Customer'} ]
 });
