@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/search/:name', customerControllers.getCustomerByName )
 
-router.get('/', customerControllers.getAllCustomers )
+router.get('/:uid', customerControllers.getAllCustomers )
 
 router.post('/', customerControllers.createCustomer )
 

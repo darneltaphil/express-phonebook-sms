@@ -64,8 +64,7 @@ res.status(201).json({msg: "Customer added successfully", status:true})
 
 //Get all customer documents from the collection
 const getAllCustomers  = async (req, res, next) => {
-  const userId = "5fa189e32516a81f48488d0f"
-  // const userId = req.params.uid;
+  const userId = req.params.uid
     let userCustomers;
         try {
           userCustomers = await User.findById(userId).populate('customers').sort({"name":1} );
@@ -75,6 +74,7 @@ const getAllCustomers  = async (req, res, next) => {
         }
       
         if (!userCustomers || userCustomers.customers.length ===0) {
+          res.json({ no_contact: "You have no Contacts " });
           const error = new HttpError('You have no contacts',404);
           return next(error);
         }

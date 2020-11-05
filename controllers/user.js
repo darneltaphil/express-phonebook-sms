@@ -38,7 +38,7 @@ const login = async (req, res, next) => {
  
     const {  email, password } = req.body;
     
-    let existingUser
+    let existingUser 
     try {
             existingUser = await User.findOne({email: email})
     }catch(err){
@@ -50,7 +50,7 @@ const login = async (req, res, next) => {
         const error = new HttpError('Email and Password do not match', 401);
         return next(error)
     }
-
+    // localStorage.setItem('currentUserId', existingUser._id)
     res.status(201).json({msg: "User Logged in successfully", userid: existingUser._id})
 };
 
@@ -107,6 +107,7 @@ const signUp = async (req, res, next) => {
             const error = new HttpError('Signing up failed, please try again later ', 500);
             return next(error)
         }
+        // localStorage.setItem('currentUserId', createdUser.toObject({getters:true}))
         res.status(201).json({msg: "User Created successfully", user: createdUser.toObject({getters:true})})
     };
 
