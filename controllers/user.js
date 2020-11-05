@@ -51,17 +51,17 @@ const login = async (req, res, next) => {
         return next(error)
     }
 
-    res.status(201).json({msg: "User Logged in successfully"})
+    res.status(201).json({msg: "User Logged in successfully", userid: existingUser._id})
 };
 
 
 const signUp = async (req, res, next) => {
     const errors = validationResult(req);
     console.log(req.body)
-    // if (!errors.isEmpty()) {
-    //     const error =new HttpError('Invalid Sign up details passed, please check your data.', 422)
-    //         return next(error);
-    //         }
+    if (!errors.isEmpty()) {
+        const error =new HttpError('Invalid Sign up details passed, please check your data.', 422)
+            return next(error);
+            } 
     const { name, mobile, email, password } = req.body;
     
     let existingUser
