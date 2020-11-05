@@ -25,7 +25,7 @@ const createCustomer = async (req, res, next) => {
                           city,
                           gps,
                           image:"https://via.placeholder.com/25",
-                          creator :"5fa189e32516a81f48488d0f" 
+                          creator ,
                       })
 
 let user
