@@ -47,7 +47,7 @@ const login = async (req, res, next) => {
     }
  
     if(!existingUser || existingUser.password !== password ){
-        const error = new HttpError('User Does not exist', 401);
+        const error = new HttpError('Email and Password do not match', 401);
         return next(error)
     }
 
