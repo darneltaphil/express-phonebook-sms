@@ -74,11 +74,11 @@ const getAllCustomers  = async (req, res, next) => {
         }
       
         if (!userCustomers || userCustomers.customers.length ===0) {
-          res.json({ no_contact: "You have no Contacts " });
+          res.json({ no_contact: true });
           const error = new HttpError('You have no contacts',404);
           return next(error);
         }
-        res.json({ customers: userCustomers.customers });  
+        res.json({ customers: userCustomers.customers });   
 };
 
 
