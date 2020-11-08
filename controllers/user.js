@@ -32,7 +32,7 @@ const getUser = async (req, res, next) => {
 const login = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-            const error = new HttpError('Invalid Login details, please check your data.', 422)
+            const error = new HttpError('Invalid Login details provided, please check your data.', 422)
             return next(error);
         }
  
@@ -50,8 +50,10 @@ const login = async (req, res, next) => {
         const error = new HttpError('Email and Password do not match', 401);
         return next(error)
     }
-    // localStorage.setItem('currentUserId', existingUser._id)
-    res.status(201).json({msg: "User Logged in successfully", userid: existingUser._id})
+    res.status(201).json(
+        {msg: "User Logged in successfully", 
+        userId: existingUser.toObject({getters:true})
+    })
 };
 
 
@@ -87,14 +89,14 @@ const signUp = async (req, res, next) => {
             image: "",
             password,
             sender_id:'',
+            total_sms: 5,
+            sms_count: 0,
+            account_active :0,
             purchase_history: [{
                     date :moment().format('LL'),
                     amount: 0,
                     description: '5 SMS Bonus'
             }],
-            total_sms: 5,
-            sms_count: 0,
-            account_active :0,
             customers :[]
                       
                 })
@@ -108,7 +110,7 @@ const signUp = async (req, res, next) => {
             return next(error)
         }
         // localStorage.setItem('currentUserId', createdUser.toObject({getters:true}))
-        res.status(201).json({msg: "User Created successfully", user: createdUser.toObject({getters:true})})
+        res.status(201).json({msg: "User Created successfully", userId: createdUser.toObject({getters:true})})
     };
 
 

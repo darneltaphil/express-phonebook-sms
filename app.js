@@ -20,15 +20,18 @@ app.use( (req,res,next)=>{
     next();
   })
 
+//Importing Routes
 const customerRoutes = require('./routes/customer')
 const userRoutes = require('./routes/user')
 const smsRoutes = require('./routes/sms')
 const HttpError = require('./models/http-error');
 
+//Using Routes
 app.use('/api/customers', customerRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/', smsRoutes);
 
+//Redirect to Indalid URL 
 app.use(( req, res, next)=> { 
     const error = new HttpError('Invalid URL', 404);
     throw error

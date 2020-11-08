@@ -9,7 +9,23 @@ router.get('/', usersController.getUser);
 
 router.post('/login', usersController.login);
 
-router.post('/signup',  usersController.signUp);
+router.post(
+    '/signup', 
+    [
+        check('name')
+        .not()
+        .isEmpty()
+        .isLength({min:2}),
+        check('mobile')
+        .not()
+        .isEmpty(),
+        check('email')
+        .not()
+        .isEmpty()
+        .isEmail()
+        
+    ] , 
+    usersController.signUp);
 
 
 module.exports = router;

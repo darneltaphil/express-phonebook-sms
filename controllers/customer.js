@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 
 //Create customer model
-/* 1. I validate the request entry from the user, if request is invalid, i throw an error with HttpError*/
+/* 1. I validate the request entry from the user, if request is invalid,  throw an error with HttpError*/
 /* 2. destructure the request body */
 /* 3. use the Customer model created to insert document into the collection */
 const createCustomer = async (req, res, next) => {
@@ -26,7 +26,7 @@ const createCustomer = async (req, res, next) => {
                           gps,
                           image:"https://via.placeholder.com/25",
                           creator ,
-                      })
+                      });
 
 let user
 try {
@@ -83,7 +83,7 @@ const getAllCustomers  = async (req, res, next) => {
 
 
 //Search customer with their names
-const getCustomerByName =async  (req, res, next) => {
+const getCustomerByName =async  (req, res, next) => { 
     const errors = validationResult(req);
         if (!errors.isEmpty()) {
              return next(
@@ -95,15 +95,13 @@ const getCustomerByName =async  (req, res, next) => {
         let customer;
        console.log({name:`/.*${userName}.*/`})
         try {
-//             customer = await Customer.find({name:userName});
          customer = await Customer.find({name: userName});
-        //customer = await Customer.find({name:/.*userName.*/});
     } catch (err) {
           const error = new HttpError(
             'Something went wrong, could not find the customer.',
             500
           );
-          return next(error);
+          return next(error);  
         }
       
         if (!customer) {
